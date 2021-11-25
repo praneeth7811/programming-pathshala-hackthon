@@ -14,7 +14,7 @@ window.geometry("900x500")
 
 frame1 = Frame(window,pady=100)
 frame2 = Frame(window,pady=100)
-frame3 = Frame(window,padx=280,pady=180)
+frame3 = Frame(window,padx=180,pady=80)
 frame4 = Frame(window,pady=60)
 frame5 = Frame(window,pady=30,)
 frame6 = Frame(window,pady=60)
@@ -50,9 +50,7 @@ def change_frame2():
 
 #Documents subit Page
 def change_frame3():
-    hello = "\n        Dear " + Ename.get() + ", Please submit your documents"    
-    myLabel = Label(window, text=hello,font=("times new roman",18,BOLD,ITALIC))
-    myLabel.place(x=0,y=110)  
+    
     frame3.pack(side=LEFT)
     frame1.pack_forget()
     frame2.pack_forget()
@@ -69,19 +67,58 @@ def change_frame4():
     frame3.pack_forget()
     frame5.pack_forget()
 
+def change_frame4n():  
+    extra=Label(window,text="",width=900,height=500)
+    extra.pack()
+    frame4.pack()
+    window.geometry("900x550")
+    btn5.destroy()
+    my_canvas.destroy()
+    frame1.pack_forget()
+    frame2.pack_forget()
+    frame3.pack_forget()
+    frame5.pack_forget()
+
+def frame5_logout():
+    window.destroy()
+
 #documents SUBMIT complete page
 def change_frame5():
     frame5.pack() 
-    myLabel1 = Label(frame5, text="                                                            ",font=("times new roman",18,BOLD,ITALIC))
-    myLabel1.place(x=0,y=110) 
     frame1.pack_forget()
     frame2.pack_forget()
     frame3.pack_forget()
     frame4.pack_forget()
     frame6.pack_forget()
-    hello = "\n        Dear " + Ename.get() + ", your documents are sucessfully uploded. Our college staff will verify your \n documents and contact you soon..."    
-    myLabel = Label(window, text=hello,font=("times new roman",18,BOLD,ITALIC))
-    myLabel.place(x=0,y=110)  
+
+    IMAGE_PATH = "D:\LPU 3rd sem\INT-213\python_project\edit.png"
+    WIDTH, HEIGTH = 900, 500
+
+    window.geometry('900x500')
+
+    canvas = tk.Canvas(window, width=WIDTH, height=HEIGTH)
+    canvas.pack()
+
+    img = ImageTk.PhotoImage(Image.open(IMAGE_PATH).resize((WIDTH, HEIGTH), Image.ANTIALIAS))
+    canvas.background = img  # Keep a reference in case this code is put in a function.
+    bg = canvas.create_image(0, 0, anchor=tk.NW, image=img)
+
+
+    hello = "      Dear " + Ename.get() + ", your documents are sucessfully uploded. Our college staff will verify your \n documents and contact you soon..."    
+    myLabel = Label(window, text=hello,font=("times new roman",18,BOLD,ITALIC), bg= "black", fg="orange")
+    myLabel.place(x=27,y=150)  
+
+    button = tk.Button(window, text="Home",bg="grey", borderwidth=1, command = change_frame4n)
+    button_window = canvas.create_window(4, 4, anchor=tk.NW, window=button)
+
+    button1 = tk.Button(window, text="Dash Board", bg="grey", borderwidth=1)
+    button_window = canvas.create_window(47, 4, anchor=tk.NW, window=button1)
+
+    button2 = tk.Button(window, text="Admission Status", bg="grey", borderwidth=1)
+    button_window = canvas.create_window(117, 4, anchor=tk.NW, window=button2)
+
+    button3 = tk.Button(window, text="Logout", bg="grey",fg="black", width=10,borderwidth=2,command = frame5_logout, font=("times new roman",16,BOLD))
+    button_window = canvas.create_window(745, 435, anchor=tk.NW, window=button3)
 
 #getting mobile no. and OTP 
 def change_frame6():
@@ -101,7 +138,7 @@ def otp_ver():
     otp = random.randint(1000,9999)
     k=str(otp)
     print(k)
-    client = Client("AC892a914ba3785f5c6b9c3bf7c529bd37", "cad1d6a68cdce11d892b325f976fa35a")
+    client = Client("AC892a914ba3785f5c6b9c3bf7c529bd37", "5f6f041f8a9a34fdf6002e3f35d04d76")
     msg=client.api.account.messages.create(
             to=phonew.get(),
             from_="+18507895934",
@@ -219,6 +256,9 @@ passwordl.grid(row=2,column=1,sticky=tk.W)
 Epasswordl.grid(row=2,column=2)
 
 #Documents Buttons Submit(frame3)
+hello = "\n        Dear " + Ename.get() + ", Please submit your documents"    
+myLabel = Label(frame3, text=hello,font=("times new roman",18,BOLD,ITALIC))
+myLabel.grid(row=1,column=1)
 btnfile1 = Button(frame3,text="10th",width=10,height=1,bg="orange",fg="white",command=open_file,font=("times new roman",16,BOLD))
 btnfile2 = Button(frame3,text="INTER",width=10,height=1,bg="orange",fg="white",command=open_file,font=("times new roman",16,BOLD))
 btnfile3 = Button(frame3,text="AADHAR",width=10,height=1,bg="orange",fg="white",command=open_file,font=("times new roman",16,BOLD))
@@ -228,7 +268,7 @@ btnfile4 = Button(frame3,text="NEXT",width=10,height=1,bg="orange",fg="white",co
 btnfile1.grid(row=2,column=1,pady=10)
 btnfile2.grid(row=3,column=1,pady=10)
 btnfile3.grid(row=4,column=1,pady=10)
-btnfile4.grid(row=60,column=120,padx=270,pady=100)
+btnfile4.grid(row=60,column=120)
 
 #Hom page Applynow and login Buttons
 btn1 = Button(frame4, text="Apply Now", width=10,bg="orange",fg="white",command=change_frame1,font=("times new roman",16,BOLD))
